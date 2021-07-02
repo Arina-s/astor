@@ -1,0 +1,1 @@
+Astor is an application that helps you plan your life.
