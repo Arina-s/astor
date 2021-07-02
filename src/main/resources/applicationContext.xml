@@ -7,11 +7,28 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="book" class="com.arinauniversity.astor.TechnicalBook">
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <bean id="technicalBook" class="com.arinauniversity.astor.TechnicalBook">
+    </bean>
+
+    <bean id="fantasyBook" class="com.arinauniversity.astor.FantasyBook">
+    </bean>
+
+    <bean id="figure" class="com.arinauniversity.astor.Figure">
+        <constructor-arg value="Tree"/>
     </bean>
 
     <bean id="bookShelf" class="com.arinauniversity.astor.BookShelf">
-        <constructor-arg ref="book"/>
+        <property name="bookList">
+            <list>
+                <ref bean="technicalBook"/>
+                <ref bean="fantasyBook"/>
+            </list>
+        </property>
+        <property name="figure" ref="figure"/>
+        <property name="owner" value="${owner}"/>
+        <property name="space" value="${space}"/>
     </bean>
 
 </beans>
