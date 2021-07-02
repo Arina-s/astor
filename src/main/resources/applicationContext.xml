@@ -19,7 +19,7 @@
         <constructor-arg value="Tree"/>
     </bean>
 
-    <bean id="bookShelf" class="com.arinauniversity.astor.BookShelf">
+    <bean id="bookShelf" class="com.arinauniversity.astor.BookShelf" scope="prototype">
         <property name="bookList">
             <list>
                 <ref bean="technicalBook"/>

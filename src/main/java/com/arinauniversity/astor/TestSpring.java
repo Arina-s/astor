@@ -8,8 +8,15 @@ public class TestSpring {
         ClassPathXmlApplicationContext applicationContext =
                 new ClassPathXmlApplicationContext("applicationContext.xml");
 
-        BookShelf bookShelf = applicationContext.getBean("bookShelf", BookShelf.class);
-        bookShelf.printBooksNames();
+        BookShelf bookShelfArina = applicationContext.getBean("bookShelf", BookShelf.class);
+        BookShelf bookShelfSara = applicationContext.getBean("bookShelf", BookShelf.class);
+
+        bookShelfArina.printBooksNames();
+        bookShelfSara.printBooksNames();
+        System.out.println(bookShelfArina == bookShelfSara);
+        bookShelfSara.setOwner("Sara");
+        bookShelfArina.printBooksNames();
+        bookShelfSara.printBooksNames();
 
         applicationContext.close();
     }
