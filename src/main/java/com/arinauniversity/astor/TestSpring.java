@@ -1,12 +1,12 @@
 package com.arinauniversity.astor;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class TestSpring {
 
     public static void main(String[] args) {
-        AnnotationConfigApplicationContext applicationContext =
-                new AnnotationConfigApplicationContext(SpringConfig.class);
+        ClassPathXmlApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("applicationContext.xml");
 
         BookShelf bookShelfArina = applicationContext.getBean("bookShelf", BookShelf.class);
         BookShelf bookShelfSara = applicationContext.getBean("bookShelf", BookShelf.class);
