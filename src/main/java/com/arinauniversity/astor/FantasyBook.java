@@ -1,8 +1,5 @@
 package com.arinauniversity.astor;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class FantasyBook implements Book {
 
     @Override
