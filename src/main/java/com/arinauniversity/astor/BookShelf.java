@@ -1,47 +1,44 @@
 package com.arinauniversity.astor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import javax.annotation.PostConstruct;
 import java.util.List;
 
+@Component
+@Scope("prototype")
 public class BookShelf {
 
-    private List<Book> bookList = new ArrayList<>();
+    private List<Book> bookList;
     private Book mainBook;
-    private String owner;
-    @Autowired
     private Figure figure;
+
+    @Value("${owner}")
+    private String owner;
+    @Value("${space}")
     private int space;
 
-    private BookShelf() {
-    }
-
-    public static BookShelf getBookShelf() {
-        return new BookShelf();
-    }
-
-    public void setBookList(List<Book> bookList) {
+    @Autowired
+    public BookShelf(List<Book> bookList, Figure figure) {
         this.bookList = bookList;
-    }
-
-    public void setFigure(Figure figure) {
         this.figure = figure;
     }
 
     @Autowired
-    public void setMainBook(Book fantasyBook) {
-        this.mainBook = fantasyBook;
+    @Qualifier("technicalBook")
+    public void setMainBook(Book mainBook) {
+        this.mainBook = mainBook;
     }
 
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    public void setSpace(int space) {
-        this.space = space;
-    }
-
+    @PostConstruct
     public void bookShelfInit() {
         System.out.println("---BookShelf initialization---");
     }
