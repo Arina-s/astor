@@ -1,10 +1,19 @@
 package com.arinauniversity.astor;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+@Component
+@Scope("prototype")
 public class Figure {
 
     private String name;
 
-    public Figure(String name) {
+    public Figure(@Value("tree") String name) {
         this.name = name;
     }
 
@@ -16,10 +25,12 @@ public class Figure {
         this.name = name;
     }
 
+    @PostConstruct
     public void figureInit() {
         System.out.println("---Figure initialization---");
     }
 
+    @PreDestroy
     public void figureDestroy() {
         System.out.println("---Figure destroy---");
     }
