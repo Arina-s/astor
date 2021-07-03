@@ -16,4 +16,12 @@ public class Figure {
         this.name = name;
     }
 
+    public void figureInit() {
+        System.out.println("---Figure initialization---");
+    }
+
+    public void figureDestroy() {
+        System.out.println("---Figure destroy---");
+    }
+
 }

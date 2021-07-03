@@ -15,11 +15,13 @@
     <bean id="fantasyBook" class="com.arinauniversity.astor.FantasyBook">
     </bean>
 
-    <bean id="figure" class="com.arinauniversity.astor.Figure">
+    <bean id="figure" class="com.arinauniversity.astor.Figure" init-method="figureInit" destroy-method="figureDestroy">
         <constructor-arg value="Tree"/>
     </bean>
 
-    <bean id="bookShelf" class="com.arinauniversity.astor.BookShelf" scope="prototype">
+    <bean id="bookShelf" class="com.arinauniversity.astor.BookShelf" scope="prototype"
+          init-method="bookShelfInit"
+          factory-method="getBookShelf">
         <property name="bookList">
             <list>
                 <ref bean="technicalBook"/>

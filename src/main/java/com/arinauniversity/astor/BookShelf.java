@@ -10,7 +10,11 @@ public class BookShelf {
     private Figure figure;
     private int space;
 
-    public BookShelf() {
+    private BookShelf() {
+    }
+
+    public static BookShelf getBookShelf() {
+        return new BookShelf();
     }
 
     public void setBookList(List<Book> bookList) {
@@ -27,6 +31,10 @@ public class BookShelf {
 
     public void setSpace(int space) {
         this.space = space;
+    }
+
+    public void bookShelfInit() {
+        System.out.println("---BookShelf initialization---");
     }
 
     public void printBooksNames() {
