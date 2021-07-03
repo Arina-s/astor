@@ -1,12 +1,16 @@
 package com.arinauniversity.astor;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookShelf {
 
     private List<Book> bookList = new ArrayList<>();
+    private Book mainBook;
     private String owner;
+    @Autowired
     private Figure figure;
     private int space;
 
@@ -25,6 +29,11 @@ public class BookShelf {
         this.figure = figure;
     }
 
+    @Autowired
+    public void setMainBook(Book fantasyBook) {
+        this.mainBook = fantasyBook;
+    }
+
     public void setOwner(String owner) {
         this.owner = owner;
     }
@@ -41,6 +50,7 @@ public class BookShelf {
         System.out.println("Books : " + bookList);
         System.out.println("Owner : " + owner);
         System.out.println("Space : " + space);
+        System.out.println("MainBook : " + mainBook);
         System.out.println("Figure : " + figure.getName());
     }
 

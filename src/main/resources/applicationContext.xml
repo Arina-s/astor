@@ -8,12 +8,7 @@
     http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder location="classpath:application.properties"/>
-
-    <bean id="technicalBook" class="com.arinauniversity.astor.TechnicalBook">
-    </bean>
-
-    <bean id="fantasyBook" class="com.arinauniversity.astor.FantasyBook">
-    </bean>
+    <context:component-scan base-package="com.arinauniversity.astor"/>
 
     <bean id="figure" class="com.arinauniversity.astor.Figure" init-method="figureInit" destroy-method="figureDestroy">
         <constructor-arg value="Tree"/>
@@ -28,7 +23,6 @@
                 <ref bean="fantasyBook"/>
             </list>
         </property>
-        <property name="figure" ref="figure"/>
         <property name="owner" value="${owner}"/>
         <property name="space" value="${space}"/>
     </bean>
