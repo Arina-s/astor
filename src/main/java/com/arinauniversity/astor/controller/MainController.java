@@ -1,6 +1,7 @@
 package com.arinauniversity.astor.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 public class MainController {
 
     @GetMapping("/")
-    public String start(HttpServletRequest request) {
+    public String start(HttpServletRequest request, Model model) {
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
-        System.out.println("Hello, " + name + " " + surname);
+        model.addAttribute("name", name);
+        model.addAttribute("surname", surname);
         return "main/start";
     }
 

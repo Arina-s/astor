@@ -4,6 +4,7 @@ import com.arinauniversity.astor.Book;
 import com.arinauniversity.astor.BookShelf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,20 +21,22 @@ public class BookController {
     private BookShelf bookShelf;
 
     @GetMapping("")
-    public String getShelf(@RequestParam(value = "genre", required = false) String genre) {
-        printBook(genre);
+    public String getShelf(@RequestParam(value = "genre", required = false) String genre, Model model) {
+        model.addAttribute("book", getBook(genre));
         return "book/bookShelf";
     }
 
-    private void printBook(String genre) {
+    private String getBook(String genre) {
         Book book = bookShelf.getBookList().stream()
                 .filter(e -> e.getGenre().equals(genre))
                 .findFirst()
                 .orElse(null);
         if (book != null) {
             log.info(book.toString());
+            return book.toString();
         } else {
             log.warning(String.format("No such genre: %s", genre));
+            return "...";
         }
     }
 
