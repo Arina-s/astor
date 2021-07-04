@@ -10,4 +10,9 @@ public class TechnicalBook implements Book {
         return "Java philosophy";
     }
 
+    @Override
+    public String getGenre() {
+        return "technical";
+    }
+
 }

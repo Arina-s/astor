@@ -28,6 +28,10 @@ public class BookShelf {
         this.figure = figure;
     }
 
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
     @Autowired
     @Qualifier("technicalBook")
     public void setMainBook(Book mainBook) {

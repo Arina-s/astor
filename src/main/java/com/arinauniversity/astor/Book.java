@@ -4,4 +4,6 @@ public interface Book {
 
     String toString();
 
+    String getGenre();
+
 }

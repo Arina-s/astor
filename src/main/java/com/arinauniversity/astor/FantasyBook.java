@@ -10,4 +10,9 @@ public class FantasyBook implements Book {
         return "Harry Potter";
     }
 
+    @Override
+    public String getGenre() {
+        return "fantasy";
+    }
+
 }
