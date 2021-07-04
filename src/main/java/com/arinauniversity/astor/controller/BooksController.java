@@ -1,7 +1,7 @@
 package com.arinauniversity.astor.controller;
 
-import com.arinauniversity.astor.Book;
-import com.arinauniversity.astor.BookShelf;
+import com.arinauniversity.astor.model.Book;
+import com.arinauniversity.astor.model.BookShelf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +13,14 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/bookShelf")
-public class BookController {
+public class BooksController {
 
-    private static final Logger log = Logger.getLogger(BookController.class.getName());
+    private static final Logger log = Logger.getLogger(BooksController.class.getName());
 
     @Autowired
     private BookShelf bookShelf;
 
-    @GetMapping("")
+    @GetMapping()
     public String getShelf(@RequestParam(value = "genre", required = false) String genre, Model model) {
         model.addAttribute("book", getBook(genre));
         return "book/bookShelf";

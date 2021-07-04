@@ -1,4 +1,4 @@
-package com.arinauniversity.astor;
+package com.arinauniversity.astor.model;
 
 public interface Book {
 

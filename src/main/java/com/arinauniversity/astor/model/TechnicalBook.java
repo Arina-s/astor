@@ -1,4 +1,4 @@
-package com.arinauniversity.astor;
+package com.arinauniversity.astor.model;
 
 import org.springframework.stereotype.Component;
 

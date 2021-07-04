@@ -1,6 +1,7 @@
 package com.arinauniversity.astor;
 
 import com.arinauniversity.astor.config.SpringConfig;
+import com.arinauniversity.astor.model.BookShelf;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class TestSpring {
