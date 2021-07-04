@@ -30,4 +30,9 @@ public class UserDAO {
                 .orElse(null);
     }
 
+    public void save(User user) {
+        user.setId(++count);
+        userList.add(user);
+    }
+
 }
