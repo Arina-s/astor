@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UsersController {
 
+    private static final String REDIRECT_USERS = "redirect:/users";
     private UserDAO userDAO;
 
     @Autowired
@@ -25,7 +26,7 @@ public class UsersController {
     }
 
     @GetMapping("/{id}")
-    public String getUsers(@PathVariable("id") int id, Model model) {
+    public String getUser(@PathVariable("id") int id, Model model) {
         model.addAttribute("user", userDAO.getUserById(id));
         return "users/user";
     }
@@ -38,7 +39,25 @@ public class UsersController {
     @PostMapping()
     public String saveUser(@ModelAttribute("user") User user) {
         userDAO.save(user);
-        return "redirect:/users";
+        return REDIRECT_USERS;
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editForm(Model model, @PathVariable("id") int id) {
+        model.addAttribute("user", userDAO.getUserById(id));
+        return "users/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String editUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
+        userDAO.update(id, user);
+        return REDIRECT_USERS;
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable("id") int id) {
+        userDAO.delete(id);
+        return REDIRECT_USERS;
     }
 
 }

@@ -35,4 +35,13 @@ public class UserDAO {
         userList.add(user);
     }
 
+    public void update(int id, User updatedUser) {
+        User user = getUserById(id);
+        user.setName(updatedUser.getName());
+    }
+
+    public void delete(int id) {
+        userList.removeIf(user -> user.getId() == id);
+    }
+
 }

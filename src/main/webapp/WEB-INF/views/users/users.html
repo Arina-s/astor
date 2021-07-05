@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Users</title>
@@ -8,6 +8,8 @@
 <div th:each="user : ${users}">
     <a th:href="@{/users/{id}(id = ${user.getId()})}" th:text="${user.getName()}"></a>
 </div>
-<a href="/users/new"><button>Create user</button></a>
+<a href="/users/new">
+    <button>Create user</button>
+</a>
 </body>
 </html>

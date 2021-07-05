@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>User</title>
@@ -10,6 +10,14 @@
     <span th:text="${user.getId()}"></span>
     <span th:text="${user.getName()}"></span>
 </div>
+<br>
+<a th:href="@{/users/{id}/edit(id=${user.getId()})}">
+    <button>Edit</button>
+</a>
+<br>
+<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
 <a href="/users">Go to all users</a>
 <hr>
 </body>
