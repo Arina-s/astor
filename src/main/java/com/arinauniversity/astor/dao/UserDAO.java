@@ -14,9 +14,9 @@ public class UserDAO {
 
     {
         userList = new ArrayList<>();
-        userList.add(new User(++count, "Mary"));
-        userList.add(new User(++count, "Nikolas"));
-        userList.add(new User(++count, "Simon"));
+        userList.add(new User(++count, "Mary", 24, "mary78@mail.ru"));
+        userList.add(new User(++count, "Nikolas", 34, "nikolaTesla2_2@gmail.com"));
+        userList.add(new User(++count, "Simon", 18, "mario_rty@mail.ru"));
     }
 
     public List<User> getUsers() {
@@ -38,6 +38,8 @@ public class UserDAO {
     public void update(int id, User updatedUser) {
         User user = getUserById(id);
         user.setName(updatedUser.getName());
+        user.setAge(updatedUser.getAge());
+        user.setEmail(updatedUser.getEmail());
     }
 
     public void delete(int id) {

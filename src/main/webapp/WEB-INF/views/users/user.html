@@ -6,9 +6,12 @@
 </head>
 <body>
 <hr>
-<div>
-    <span th:text="${user.getId()}"></span>
-    <span th:text="${user.getName()}"></span>
+<p>
+    Id: <span th:text="${user.getId()}"></span><br>
+    Name: <span th:text="${user.getName()}"></span><br>
+    Age: <span th:text="${user.getAge()}"></span><br>
+    Email: <span th:text="${user.getEmail()}"></span><br>
+</p>
 </div>
 <br>
 <a th:href="@{/users/{id}/edit(id=${user.getId()})}">

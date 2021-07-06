@@ -5,7 +5,10 @@ import com.arinauniversity.astor.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
@@ -37,7 +40,10 @@ public class UsersController {
     }
 
     @PostMapping()
-    public String saveUser(@ModelAttribute("user") User user) {
+    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "users/new";
+        }
         userDAO.save(user);
         return REDIRECT_USERS;
     }
@@ -49,7 +55,11 @@ public class UsersController {
     }
 
     @PatchMapping("/{id}")
-    public String editUser(@ModelAttribute("user") User user, @PathVariable("id") int id) {
+    public String editUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
+                           @PathVariable("id") int id) {
+        if (bindingResult.hasErrors()) {
+            return "users/edit";
+        }
         userDAO.update(id, user);
         return REDIRECT_USERS;
     }

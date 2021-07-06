@@ -1,16 +1,31 @@
 package com.arinauniversity.astor.model;
 
+import javax.validation.constraints.*;
+
 public class User {
 
     private int id;
+
+    @NotEmpty(message = "Name cannot be empty")
+    @Size(min = 2, max = 50, message = "Name length from 2 to 50")
     private String name;
+
+    @Min(value = 0, message = "Age should be greater than 0")
+    @Max(value = 150, message = "Age should be less than 150")
+    private int age;
+
+    @NotEmpty(message = "Email cannot be empty")
+    @Email(message = "Email should be valid")
+    private String email;
 
     public User() {
     }
 
-    public User(int id, String name) {
+    public User(int id, String name, int age, String email) {
         this.id = id;
         this.name = name;
+        this.age = age;
+        this.email = email;
     }
 
     public int getId() {
@@ -27,6 +42,22 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }
