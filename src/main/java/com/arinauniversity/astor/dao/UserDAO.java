@@ -1,6 +1,7 @@
 package com.arinauniversity.astor.dao;
 
 import com.arinauniversity.astor.model.User;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -52,34 +53,53 @@ public class UserDAO {
         return userList;
     }
 
+    @SneakyThrows
     public User getUserById(int id) {
-        return userList.stream()
-                .filter(user -> user.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
-
-    public void save(User user) {
-        try {
-            Statement statement = connection.createStatement();
-            String SQL = String.format("INSERT INTO users VALUES(%s, '%s', %s, '%s')", ++count, user.getName(),
-                    user.getAge(), user.getEmail());
-            statement.executeQuery(SQL);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        User user = new User();
+        String query = "SELECT * FROM users WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            user.setId(resultSet.getInt("id"));
+            user.setName(resultSet.getString("name"));
+            user.setAge(resultSet.getInt("age"));
+            user.setEmail(resultSet.getString("email"));
         }
-
+        return user;
     }
 
+    @SneakyThrows
+    public void save(User user) {
+        String query = "INSERT INTO users VALUES(?, ?, ?, ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, ++count);
+            preparedStatement.setString(2, user.getName());
+            preparedStatement.setInt(3, user.getAge());
+            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    @SneakyThrows
     public void update(int id, User updatedUser) {
-        User user = getUserById(id);
-        user.setName(updatedUser.getName());
-        user.setAge(updatedUser.getAge());
-        user.setEmail(updatedUser.getEmail());
+        String query = "UPDATE users SET name = ?, age = ?, email = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, updatedUser.getName());
+            preparedStatement.setInt(2, updatedUser.getAge());
+            preparedStatement.setString(3, updatedUser.getEmail());
+            preparedStatement.setInt(4, id);
+            preparedStatement.executeUpdate();
+        }
     }
 
+    @SneakyThrows
     public void delete(int id) {
-        userList.removeIf(user -> user.getId() == id);
+        String query = "DELETE FROM users WHERE id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        }
     }
 
 }
