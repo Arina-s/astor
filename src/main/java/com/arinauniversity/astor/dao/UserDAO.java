@@ -2,104 +2,56 @@ package com.arinauniversity.astor.dao;
 
 import com.arinauniversity.astor.model.User;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class UserDAO {
 
-    private static final String URL = "jdbc:postgresql://localhost:5433/astor";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "123";
     private static int count = 5;
-    private List<User> userList;
-    private Connection connection;
+    private JdbcTemplate jdbcTemplate;
 
-    public UserDAO() {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    @Autowired
+    public UserDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     public List<User> getUsers() {
-        userList = new ArrayList<>();
-
-        try {
-            Statement statement = connection.createStatement();
-            String SQL = "SELECT * FROM users";
-            ResultSet resultSet = statement.executeQuery(SQL);
-            while (resultSet.next()) {
-                User user = new User();
-                user.setId(resultSet.getInt("id"));
-                user.setName(resultSet.getString("name"));
-                user.setAge(resultSet.getInt("age"));
-                user.setEmail(resultSet.getString("email"));
-                userList.add(user);
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        return userList;
+        return jdbcTemplate.query("SELECT * FROM users", new BeanPropertyRowMapper<>(User.class));
     }
 
     @SneakyThrows
     public User getUserById(int id) {
-        User user = new User();
-        String query = "SELECT * FROM users WHERE id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            user.setId(resultSet.getInt("id"));
-            user.setName(resultSet.getString("name"));
-            user.setAge(resultSet.getInt("age"));
-            user.setEmail(resultSet.getString("email"));
-        }
-        return user;
+        return jdbcTemplate.query(
+                "SELECT * FROM users WHERE id = ?", new Object[]{id}, new BeanPropertyRowMapper<>(User.class)
+        )
+                .stream()
+                .findAny()
+                .orElse(null);
     }
 
     @SneakyThrows
     public void save(User user) {
-        String query = "INSERT INTO users VALUES(?, ?, ?, ?)";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, ++count);
-            preparedStatement.setString(2, user.getName());
-            preparedStatement.setInt(3, user.getAge());
-            preparedStatement.setString(4, user.getEmail());
-            preparedStatement.executeUpdate();
-        }
+        jdbcTemplate.update(
+                "INSERT INTO users VALUES(?, ?, ?, ?)", ++count, user.getName(), user.getAge(), user.getEmail()
+        );
     }
 
     @SneakyThrows
     public void update(int id, User updatedUser) {
-        String query = "UPDATE users SET name = ?, age = ?, email = ? WHERE id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, updatedUser.getName());
-            preparedStatement.setInt(2, updatedUser.getAge());
-            preparedStatement.setString(3, updatedUser.getEmail());
-            preparedStatement.setInt(4, id);
-            preparedStatement.executeUpdate();
-        }
+        jdbcTemplate.update(
+                "UPDATE users SET name = ?, age = ?, email = ? WHERE id = ?",
+                updatedUser.getName(), updatedUser.getAge(), updatedUser.getEmail(), id
+        );
     }
 
     @SneakyThrows
     public void delete(int id) {
-        String query = "DELETE FROM users WHERE id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        }
+        jdbcTemplate.update("DELETE FROM users WHERE id = ?", id);
     }
 
 }
