@@ -1,4 +1,4 @@
-package com.arinauniversity.astor;
+package com.arinauniversity.astor.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,6 +26,10 @@ public class BookShelf {
     public BookShelf(List<Book> bookList, Figure figure) {
         this.bookList = bookList;
         this.figure = figure;
+    }
+
+    public List<Book> getBookList() {
+        return bookList;
     }
 
     @Autowired

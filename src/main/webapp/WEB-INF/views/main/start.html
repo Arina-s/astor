@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+<p>Hello, <span th:text="${name}"></span> <span th:text="${surname}"></span>!</p>
+
+<a href="/bookShelf">Book shelf</a>
+<a href="/bookShelf?genre=fantasy">Book shelf fantasy</a>
+<a href="/bookShelf?genre=technical">Book shelf technical</a>
+<br>
+<a href="/users">Users</a>
+<hr>
+<a href="/exit">Go to exit</a>
+</body>
+</html>
