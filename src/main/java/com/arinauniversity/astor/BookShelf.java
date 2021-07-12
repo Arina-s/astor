@@ -8,11 +8,13 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Scope("prototype")
 public class BookShelf {
 
+    private Map<String, Book> bookMap;
     private List<Book> bookList;
     private Book mainBook;
     private Figure figure;
@@ -23,7 +25,8 @@ public class BookShelf {
     private int space;
 
     @Autowired
-    public BookShelf(List<Book> bookList, Figure figure) {
+    public BookShelf(Map<String, Book> bookMap, List<Book> bookList, Figure figure) {
+        this.bookMap = bookMap;
         this.bookList = bookList;
         this.figure = figure;
     }
@@ -44,7 +47,8 @@ public class BookShelf {
     }
 
     public void printBooksNames() {
-        System.out.println("Books : " + bookList);
+        System.out.println("Books list: " + bookList);
+        System.out.println("Books map: " + bookMap);
         System.out.println("Owner : " + owner);
         System.out.println("Space : " + space);
         System.out.println("MainBook : " + mainBook);
