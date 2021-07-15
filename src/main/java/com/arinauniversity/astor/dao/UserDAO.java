@@ -2,6 +2,7 @@ package com.arinauniversity.astor.dao;
 
 import com.arinauniversity.astor.model.User;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -11,24 +12,14 @@ import java.util.List;
 @Component
 public class UserDAO {
 
-    private static final String URL = "jdbc:postgresql://localhost:5433/astor";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "123";
     private static int count = 5;
     private List<User> userList;
-    private Connection connection;
 
-    public UserDAO() {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    private final Connection connection;
+
+    @Autowired
+    public UserDAO(Connection connection) {
+        this.connection = connection;
     }
 
     public List<User> getUsers() {
