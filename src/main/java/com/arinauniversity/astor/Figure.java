@@ -6,6 +6,7 @@ public class Figure {
 
     public Figure(String name) {
         this.name = name;
+        System.out.println("Figure constructor");
     }
 
     public String getName() {
